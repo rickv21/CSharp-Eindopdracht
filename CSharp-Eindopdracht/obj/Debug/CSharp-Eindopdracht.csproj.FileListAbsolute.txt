@@ -1,0 +1,12 @@
+D:\Documents\CSharp-Eindopdracht\CSharp-Eindopdracht\bin\Debug\CSharp-Eindopdracht2.exe.config
+D:\Documents\CSharp-Eindopdracht\CSharp-Eindopdracht\bin\Debug\CSharp-Eindopdracht2.exe
+D:\Documents\CSharp-Eindopdracht\CSharp-Eindopdracht\bin\Debug\CSharp-Eindopdracht2.pdb
+D:\Documents\CSharp-Eindopdracht\CSharp-Eindopdracht\obj\Debug\CSharp-Eindopdracht.csproj.AssemblyReference.cache
+D:\Documents\CSharp-Eindopdracht\CSharp-Eindopdracht\obj\Debug\CSharp-Eindopdracht.csproj.SuggestedBindingRedirects.cache
+D:\Documents\CSharp-Eindopdracht\CSharp-Eindopdracht\obj\Debug\CSharp_Eindopdracht2.MainForm.resources
+D:\Documents\CSharp-Eindopdracht\CSharp-Eindopdracht\obj\Debug\CSharp_Eindopdracht2.Properties.Resources.resources
+D:\Documents\CSharp-Eindopdracht\CSharp-Eindopdracht\obj\Debug\CSharp_Eindopdracht2.SplashScreen.resources
+D:\Documents\CSharp-Eindopdracht\CSharp-Eindopdracht\obj\Debug\CSharp-Eindopdracht.csproj.GenerateResource.cache
+D:\Documents\CSharp-Eindopdracht\CSharp-Eindopdracht\obj\Debug\CSharp-Eindopdracht.csproj.CoreCompileInputs.cache
+D:\Documents\CSharp-Eindopdracht\CSharp-Eindopdracht\obj\Debug\CSharp-Eindopdracht2.exe
+D:\Documents\CSharp-Eindopdracht\CSharp-Eindopdracht\obj\Debug\CSharp-Eindopdracht2.pdb

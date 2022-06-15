@@ -46,7 +46,7 @@
             this.label6 = new System.Windows.Forms.Label();
             this.dayBox = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.distanceBox = new System.Windows.Forms.TextBox();
             this.endTimePicker = new System.Windows.Forms.DateTimePicker();
             this.label4 = new System.Windows.Forms.Label();
             this.startTimePicker = new System.Windows.Forms.DateTimePicker();
@@ -67,6 +67,7 @@
             this.label9 = new System.Windows.Forms.Label();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.companyTab = new System.Windows.Forms.TabPage();
+            this.companySaveButton = new System.Windows.Forms.Button();
             this.companyBox = new System.Windows.Forms.TextBox();
             this.companyLabel = new System.Windows.Forms.Label();
             this.trayIcon = new System.Windows.Forms.NotifyIcon(this.components);
@@ -78,6 +79,8 @@
             this.trayContextAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.trayContextOpen = new System.Windows.Forms.ToolStripMenuItem();
             this.trayContextExit = new System.Windows.Forms.ToolStripMenuItem();
+            this.rideCountLabelValue = new System.Windows.Forms.Label();
+            this.rideCountLabel = new System.Windows.Forms.Label();
             this.tabControl.SuspendLayout();
             this.taxiTab.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -100,6 +103,8 @@
             // 
             // taxiTab
             // 
+            this.taxiTab.Controls.Add(this.rideCountLabelValue);
+            this.taxiTab.Controls.Add(this.rideCountLabel);
             this.taxiTab.Controls.Add(this.averageDistanceLabel);
             this.taxiTab.Controls.Add(this.label14);
             this.taxiTab.Controls.Add(this.totalIncomeLabel);
@@ -124,7 +129,7 @@
             // averageDistanceLabel
             // 
             this.averageDistanceLabel.AutoSize = true;
-            this.averageDistanceLabel.Location = new System.Drawing.Point(391, 134);
+            this.averageDistanceLabel.Location = new System.Drawing.Point(368, 134);
             this.averageDistanceLabel.Name = "averageDistanceLabel";
             this.averageDistanceLabel.Size = new System.Drawing.Size(16, 13);
             this.averageDistanceLabel.TabIndex = 12;
@@ -133,7 +138,7 @@
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(284, 134);
+            this.label14.Location = new System.Drawing.Point(261, 134);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(113, 13);
             this.label14.TabIndex = 11;
@@ -142,7 +147,7 @@
             // totalIncomeLabel
             // 
             this.totalIncomeLabel.AutoSize = true;
-            this.totalIncomeLabel.Location = new System.Drawing.Point(351, 117);
+            this.totalIncomeLabel.Location = new System.Drawing.Point(368, 118);
             this.totalIncomeLabel.Name = "totalIncomeLabel";
             this.totalIncomeLabel.Size = new System.Drawing.Size(16, 13);
             this.totalIncomeLabel.TabIndex = 10;
@@ -151,7 +156,7 @@
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(284, 117);
+            this.label12.Location = new System.Drawing.Point(261, 118);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(71, 13);
             this.label12.TabIndex = 9;
@@ -160,7 +165,7 @@
             // longestRideLabel
             // 
             this.longestRideLabel.AutoSize = true;
-            this.longestRideLabel.Location = new System.Drawing.Point(391, 102);
+            this.longestRideLabel.Location = new System.Drawing.Point(368, 102);
             this.longestRideLabel.Name = "longestRideLabel";
             this.longestRideLabel.Size = new System.Drawing.Size(16, 13);
             this.longestRideLabel.TabIndex = 8;
@@ -169,7 +174,7 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(284, 102);
+            this.label10.Location = new System.Drawing.Point(261, 102);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(114, 13);
             this.label10.TabIndex = 7;
@@ -178,7 +183,7 @@
             // taxiIDLabel
             // 
             this.taxiIDLabel.AutoSize = true;
-            this.taxiIDLabel.Location = new System.Drawing.Point(328, 85);
+            this.taxiIDLabel.Location = new System.Drawing.Point(368, 85);
             this.taxiIDLabel.Name = "taxiIDLabel";
             this.taxiIDLabel.Size = new System.Drawing.Size(16, 13);
             this.taxiIDLabel.TabIndex = 6;
@@ -187,7 +192,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(284, 85);
+            this.label8.Location = new System.Drawing.Point(261, 85);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(47, 13);
             this.label8.TabIndex = 5;
@@ -201,7 +206,7 @@
             this.panel1.Controls.Add(this.label6);
             this.panel1.Controls.Add(this.dayBox);
             this.panel1.Controls.Add(this.label5);
-            this.panel1.Controls.Add(this.textBox1);
+            this.panel1.Controls.Add(this.distanceBox);
             this.panel1.Controls.Add(this.endTimePicker);
             this.panel1.Controls.Add(this.label4);
             this.panel1.Controls.Add(this.startTimePicker);
@@ -214,12 +219,14 @@
             // 
             // rideAddButton
             // 
+            this.rideAddButton.Enabled = false;
             this.rideAddButton.Location = new System.Drawing.Point(47, 169);
             this.rideAddButton.Name = "rideAddButton";
             this.rideAddButton.Size = new System.Drawing.Size(75, 23);
             this.rideAddButton.TabIndex = 8;
             this.rideAddButton.Text = "Add Ride";
             this.rideAddButton.UseVisualStyleBackColor = true;
+            this.rideAddButton.Click += new System.EventHandler(this.rideAddButton_Click);
             // 
             // label7
             // 
@@ -241,6 +248,7 @@
             // 
             // dayBox
             // 
+            this.dayBox.Enabled = false;
             this.dayBox.FormattingEnabled = true;
             this.dayBox.Items.AddRange(new object[] {
             "Monday",
@@ -264,16 +272,18 @@
             this.label5.TabIndex = 6;
             this.label5.Text = "km";
             // 
-            // textBox1
+            // distanceBox
             // 
-            this.textBox1.Location = new System.Drawing.Point(64, 98);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(34, 20);
-            this.textBox1.TabIndex = 4;
+            this.distanceBox.Enabled = false;
+            this.distanceBox.Location = new System.Drawing.Point(64, 98);
+            this.distanceBox.Name = "distanceBox";
+            this.distanceBox.Size = new System.Drawing.Size(34, 20);
+            this.distanceBox.TabIndex = 4;
             // 
             // endTimePicker
             // 
             this.endTimePicker.CustomFormat = "";
+            this.endTimePicker.Enabled = false;
             this.endTimePicker.Location = new System.Drawing.Point(64, 71);
             this.endTimePicker.Name = "endTimePicker";
             this.endTimePicker.Size = new System.Drawing.Size(88, 20);
@@ -291,6 +301,7 @@
             // startTimePicker
             // 
             this.startTimePicker.CustomFormat = "";
+            this.startTimePicker.Enabled = false;
             this.startTimePicker.Location = new System.Drawing.Point(64, 42);
             this.startTimePicker.Name = "startTimePicker";
             this.startTimePicker.Size = new System.Drawing.Size(88, 20);
@@ -317,12 +328,14 @@
             // 
             // deleteTaxiButton
             // 
+            this.deleteTaxiButton.Enabled = false;
             this.deleteTaxiButton.Location = new System.Drawing.Point(323, 18);
             this.deleteTaxiButton.Name = "deleteTaxiButton";
             this.deleteTaxiButton.Size = new System.Drawing.Size(75, 23);
             this.deleteTaxiButton.TabIndex = 3;
             this.deleteTaxiButton.Text = "Delete Taxi";
             this.deleteTaxiButton.UseVisualStyleBackColor = true;
+            this.deleteTaxiButton.Click += new System.EventHandler(this.deleteTaxiButton_Click);
             // 
             // addTaxiButton
             // 
@@ -332,6 +345,7 @@
             this.addTaxiButton.TabIndex = 2;
             this.addTaxiButton.Text = "Add Taxi";
             this.addTaxiButton.UseVisualStyleBackColor = true;
+            this.addTaxiButton.Click += new System.EventHandler(this.addTaxiButton_Click);
             // 
             // label1
             // 
@@ -349,6 +363,7 @@
             this.taxiDropdown.Name = "taxiDropdown";
             this.taxiDropdown.Size = new System.Drawing.Size(121, 21);
             this.taxiDropdown.TabIndex = 1;
+            this.taxiDropdown.SelectedIndexChanged += new System.EventHandler(this.taxiDropdown_SelectedIndexChanged);
             // 
             // rideTab
             // 
@@ -365,14 +380,16 @@
             // 
             // tableLayoutPanel1
             // 
+            this.tableLayoutPanel1.AutoScroll = true;
+            this.tableLayoutPanel1.BackColor = System.Drawing.Color.Gainsboro;
             this.tableLayoutPanel1.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
             this.tableLayoutPanel1.ColumnCount = 6;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.529F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.02581F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.02581F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.02581F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 21.36775F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.02581F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 17.69042F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 19.90172F));
             this.tableLayoutPanel1.Controls.Add(this.tableRideIDLabel, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.tableStartLabel, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.tableEndLabel, 2, 0);
@@ -381,7 +398,8 @@
             this.tableLayoutPanel1.Controls.Add(this.tableDueMoneyLabel, 5, 0);
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 70);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 12;
+            this.tableLayoutPanel1.RowCount = 10;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 49F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
@@ -391,10 +409,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(422, 228);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(425, 228);
             this.tableLayoutPanel1.TabIndex = 7;
             this.tableLayoutPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel1_Paint);
             // 
@@ -402,7 +417,7 @@
             // 
             this.tableRideIDLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.tableRideIDLabel.AutoSize = true;
-            this.tableRideIDLabel.Location = new System.Drawing.Point(9, 4);
+            this.tableRideIDLabel.Location = new System.Drawing.Point(8, 19);
             this.tableRideIDLabel.Name = "tableRideIDLabel";
             this.tableRideIDLabel.Size = new System.Drawing.Size(43, 13);
             this.tableRideIDLabel.TabIndex = 0;
@@ -412,7 +427,7 @@
             // 
             this.tableStartLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.tableStartLabel.AutoSize = true;
-            this.tableStartLabel.Location = new System.Drawing.Point(67, 4);
+            this.tableStartLabel.Location = new System.Drawing.Point(64, 19);
             this.tableStartLabel.Name = "tableStartLabel";
             this.tableStartLabel.Size = new System.Drawing.Size(55, 13);
             this.tableStartLabel.TabIndex = 1;
@@ -422,7 +437,7 @@
             // 
             this.tableEndLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.tableEndLabel.AutoSize = true;
-            this.tableEndLabel.Location = new System.Drawing.Point(136, 4);
+            this.tableEndLabel.Location = new System.Drawing.Point(131, 19);
             this.tableEndLabel.Name = "tableEndLabel";
             this.tableEndLabel.Size = new System.Drawing.Size(52, 13);
             this.tableEndLabel.TabIndex = 2;
@@ -432,7 +447,7 @@
             // 
             this.tableDayLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.tableDayLabel.AutoSize = true;
-            this.tableDayLabel.Location = new System.Drawing.Point(294, 4);
+            this.tableDayLabel.Location = new System.Drawing.Point(277, 19);
             this.tableDayLabel.Name = "tableDayLabel";
             this.tableDayLabel.Size = new System.Drawing.Size(26, 13);
             this.tableDayLabel.TabIndex = 4;
@@ -442,7 +457,7 @@
             // 
             this.tableDistanceLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.tableDistanceLabel.AutoSize = true;
-            this.tableDistanceLabel.Location = new System.Drawing.Point(204, 4);
+            this.tableDistanceLabel.Location = new System.Drawing.Point(197, 19);
             this.tableDistanceLabel.Name = "tableDistanceLabel";
             this.tableDistanceLabel.Size = new System.Drawing.Size(49, 13);
             this.tableDistanceLabel.TabIndex = 3;
@@ -452,7 +467,7 @@
             // 
             this.tableDueMoneyLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.tableDueMoneyLabel.AutoSize = true;
-            this.tableDueMoneyLabel.Location = new System.Drawing.Point(355, 4);
+            this.tableDueMoneyLabel.Location = new System.Drawing.Point(335, 19);
             this.tableDueMoneyLabel.Name = "tableDueMoneyLabel";
             this.tableDueMoneyLabel.Size = new System.Drawing.Size(62, 13);
             this.tableDueMoneyLabel.TabIndex = 5;
@@ -474,9 +489,11 @@
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(121, 21);
             this.comboBox1.TabIndex = 5;
+            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
             // companyTab
             // 
+            this.companyTab.Controls.Add(this.companySaveButton);
             this.companyTab.Controls.Add(this.companyBox);
             this.companyTab.Controls.Add(this.companyLabel);
             this.companyTab.Location = new System.Drawing.Point(4, 22);
@@ -486,6 +503,16 @@
             this.companyTab.TabIndex = 2;
             this.companyTab.Text = "Company Information";
             this.companyTab.UseVisualStyleBackColor = true;
+            // 
+            // companySaveButton
+            // 
+            this.companySaveButton.Location = new System.Drawing.Point(241, 27);
+            this.companySaveButton.Name = "companySaveButton";
+            this.companySaveButton.Size = new System.Drawing.Size(75, 23);
+            this.companySaveButton.TabIndex = 10;
+            this.companySaveButton.Text = "Save";
+            this.companySaveButton.UseVisualStyleBackColor = true;
+            this.companySaveButton.Click += new System.EventHandler(this.companySaveButton_Click);
             // 
             // companyBox
             // 
@@ -553,7 +580,6 @@
             this.trayContextCompany.Size = new System.Drawing.Size(192, 22);
             this.trayContextCompany.Text = "Company Information";
             this.trayContextCompany.Click += new System.EventHandler(this.trayCompanyMenuItem_Click);
-
             // 
             // trayContextAbout
             // 
@@ -576,6 +602,24 @@
             this.trayContextExit.Text = "Exit";
             this.trayContextExit.Click += new System.EventHandler(this.trayExitMenuItem_Click);
             // 
+            // rideCountLabelValue
+            // 
+            this.rideCountLabelValue.AutoSize = true;
+            this.rideCountLabelValue.Location = new System.Drawing.Point(368, 152);
+            this.rideCountLabelValue.Name = "rideCountLabelValue";
+            this.rideCountLabelValue.Size = new System.Drawing.Size(16, 13);
+            this.rideCountLabelValue.TabIndex = 14;
+            this.rideCountLabelValue.Text = "-1";
+            // 
+            // rideCountLabel
+            // 
+            this.rideCountLabel.AutoSize = true;
+            this.rideCountLabel.Location = new System.Drawing.Point(261, 152);
+            this.rideCountLabel.Name = "rideCountLabel";
+            this.rideCountLabel.Size = new System.Drawing.Size(63, 13);
+            this.rideCountLabel.TabIndex = 13;
+            this.rideCountLabel.Text = "Ride Count:";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -588,6 +632,7 @@
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Taxi Program";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.Resize += new System.EventHandler(this.MainForm_Resize);
             this.tabControl.ResumeLayout(false);
@@ -626,7 +671,7 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.ComboBox dayBox;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox distanceBox;
         private System.Windows.Forms.Button rideAddButton;
         private System.Windows.Forms.Label longestRideLabel;
         private System.Windows.Forms.Label label10;
@@ -656,6 +701,9 @@
         private System.Windows.Forms.ToolStripMenuItem trayContextAbout;
         private System.Windows.Forms.ToolStripMenuItem trayContextOpen;
         private System.Windows.Forms.ToolStripMenuItem trayContextExit;
+        private System.Windows.Forms.Button companySaveButton;
+        private System.Windows.Forms.Label rideCountLabelValue;
+        private System.Windows.Forms.Label rideCountLabel;
     }
 }
 

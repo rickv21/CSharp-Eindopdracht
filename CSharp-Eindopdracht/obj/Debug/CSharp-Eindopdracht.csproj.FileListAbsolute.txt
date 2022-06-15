@@ -10,3 +10,4 @@ D:\Documents\CSharp-Eindopdracht\CSharp-Eindopdracht\obj\Debug\CSharp-Eindopdrac
 D:\Documents\CSharp-Eindopdracht\CSharp-Eindopdracht\obj\Debug\CSharp-Eindopdracht.csproj.CoreCompileInputs.cache
 D:\Documents\CSharp-Eindopdracht\CSharp-Eindopdracht\obj\Debug\CSharp-Eindopdracht2.exe
 D:\Documents\CSharp-Eindopdracht\CSharp-Eindopdracht\obj\Debug\CSharp-Eindopdracht2.pdb
+D:\Documents\CSharp-Eindopdracht\CSharp-Eindopdracht\obj\Debug\CSharp_Eindopdracht2.About.resources

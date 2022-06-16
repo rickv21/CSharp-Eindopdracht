@@ -13,7 +13,7 @@ namespace CSharp_Eindopdracht2
         public DateTime startTime { get; set; }
         public DateTime endTime { get; set; }
         public int day { get; set; }
-        public int rideID { get; }
+        public int rideID { get; set; }
 
         public TaxiRide(double distance, DateTime startTime, DateTime endTime, int day, int rideID)
         {

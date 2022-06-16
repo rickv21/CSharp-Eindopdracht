@@ -52,6 +52,7 @@
     <Compile Include="About.Designer.cs">
       <DependentUpon>About.cs</DependentUpon>
     </Compile>
+    <Compile Include="DatabaseHandler.cs" />
     <Compile Include="Popup.cs">
       <SubType>Form</SubType>
     </Compile>

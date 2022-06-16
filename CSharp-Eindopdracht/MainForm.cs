@@ -14,22 +14,34 @@ namespace CSharp_Eindopdracht2
     public partial class MainForm : Form
     {
         private TaxiCompany taxiCompany;
-        About aboutForm = null;
+        private SplashScreen splashScreen;
+        private bool loading = true;
+        private About aboutForm = null;
+        private DatabaseHandler databaseHandler;
 
 
         public MainForm()
         {
             Thread t = new Thread(new ThreadStart(StartForm));
             t.Start();
-            Thread.Sleep(3000);
+            Thread.Sleep(2000);
+            databaseHandler = new DatabaseHandler(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=TaxiApp;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False;MultipleActiveResultSets=true");
+
             taxiCompany = new TaxiCompany();
+
+            List<Taxi> taxiList = databaseHandler.getData();
+            foreach (Taxi taxi in taxiList)
+            {
+                taxiCompany.addTaxi(taxi.taxiID, taxi);
+            }
             InitializeComponent();
             t.Abort();
         }
 
         public void StartForm()
         {
-            Application.Run(new SplashScreen());
+            splashScreen = new SplashScreen();
+            Application.Run(splashScreen);
         }
 
         //When the MainForm is loaded.
@@ -159,12 +171,13 @@ namespace CSharp_Eindopdracht2
         //When a Taxi is added, add it to the dropdowns and the Taxi company.
         private void addTaxiButton_Click(object sender, EventArgs e)
         {
-            int id = taxiCompany.taxis.Keys.Count == 0 ? 0 : taxiCompany.taxis.Keys.Max() + 1;
+            int id = databaseHandler.addTaxi();
+            //int id = taxiCompany.taxis.Keys.Count == 0 ? 0 : taxiCompany.taxis.Keys.Max() + 1;
             taxiCompany.addTaxi(id, new Taxi(id));
             int index = taxiDropdown.Items.Add(id);
             tableTaxiBox.Items.Add(id);
             taxiDropdown.SelectedIndex = index;
-            updateTable(0);
+            updateTable(id);
         }
 
         //When a Taxi is deleted, remove it from both dropdowns and the TaxiCompany.
@@ -173,6 +186,7 @@ namespace CSharp_Eindopdracht2
             int taxiID = (int)taxiDropdown.SelectedItem;
             int selectedIndex = taxiDropdown.SelectedIndex;
             taxiCompany.removeTaxi(taxiID);
+            databaseHandler.deleteTaxi(taxiID);
             //Update both the dropdowns.
             taxiDropdown.SelectedIndex = selectedIndex - 1;
             tableTaxiBox.SelectedIndex = selectedIndex - 1;

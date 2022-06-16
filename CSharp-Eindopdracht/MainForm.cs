@@ -32,10 +32,13 @@ namespace CSharp_Eindopdracht2
             Application.Run(new SplashScreen());
         }
 
+        //When the MainForm is loaded.
         private void MainForm_Load(object sender, EventArgs e)
         {
+            //Focus.
             this.Activate();
 
+            //Setup datetime inputs with correct values and formats.
             startTimePicker.CustomFormat = "HH:mm";
             startTimePicker.Value = new DateTime(2022, 01, 01, 12, 00, 00);
             startTimePicker.Format = DateTimePickerFormat.Custom;
@@ -46,21 +49,17 @@ namespace CSharp_Eindopdracht2
             endTimePicker.Format = DateTimePickerFormat.Custom;
             endTimePicker.ShowUpDown = true;
 
+            //Set day dropdown to the first entry.
             dayBox.SelectedIndex = 0;
-
             dayBox.SelectedItem = "Monday";
 
+            //Set the company textbox to the current companyName value.
             companyBox.Text = taxiCompany.companyName;
-            taxiCompany.addTaxi(0, new Taxi(0));
 
-            /*foreach(Taxi taxi in taxiCompany.taxis.Values)
-            {
-                taxiDropdown.Items.Add(taxi);
-            }*/
             foreach (int taxiID in taxiCompany.taxis.Keys)
             {
                 taxiDropdown.Items.Add(taxiID);
-                comboBox1.Items.Add(taxiID);
+                tableTaxiBox.Items.Add(taxiID);
             }
         }
 
@@ -76,22 +75,7 @@ namespace CSharp_Eindopdracht2
             }
         }
 
-
-        private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void trayIcon_MouseDoubleClick(object sender, MouseEventArgs e)
-        {
-            openWindow(-1);
-        }
-
-        private void trayCompanyMenuItem_Click(object sender, EventArgs e)
-        {
-            openWindow(2);
-        }
-
+        //Tray about window action.
         private void trayAboutMenuItem_Click(object sender, EventArgs e)
         {
             //If there is already a About window open, use this instead of opening a new instance.
@@ -109,35 +93,55 @@ namespace CSharp_Eindopdracht2
 
         }
 
+        //When the about form is closing.
         private void about_FormClosing(object sender, FormClosingEventArgs e)
         {
             //Set aboutForm to null if it is closed.
+            //This is used to only allow one instance of the about window.
             this.aboutForm = null;
         }
 
+        //Tray open action.
         private void trayOpenMenuItem_Click(object sender, EventArgs e)
         {
             openWindow(-1);
         }
 
+        //Tray double click action.
+        private void trayIcon_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            openWindow(-1);
+        }
+
+        //Tray open Company Menu action.
+        private void trayCompanyMenuItem_Click(object sender, EventArgs e)
+        {
+            openWindow(2);
+        }
+
+        //Tray exit action.
         private void trayExitMenuItem_Click(object sender, EventArgs e)
         {
             this.Close();
         }
 
+        //Tray open ManageTaxis menu.
         private void trayTaxiMenuItem_Click(object sender, EventArgs e)
         {
             openWindow(0);
         }
 
+        //Tray open Ride Overview menu.
         private void trayRideMenuItem_Click(object sender, EventArgs e)
         {
             openWindow(1);
         }
 
+        //If the application is opened from the tray.
         private void openWindow(int tab)
         {
-            Console.WriteLine(this.tabControl.SelectedIndex);
+            //If -1 is passed, the tab won't be changed.
+            //Is used for the open and double click action to stay on the current tab.
             if (tab != -1)
             {
                 this.tabControl.SelectedIndex = tab;
@@ -146,42 +150,47 @@ namespace CSharp_Eindopdracht2
             this.WindowState = FormWindowState.Normal;
         }
 
+        //When the Company name is saved.
         private void companySaveButton_Click(object sender, EventArgs e)
         {
             this.taxiCompany.companyName = companyBox.Text;
         }
 
+        //When a Taxi is added, add it to the dropdowns and the Taxi company.
         private void addTaxiButton_Click(object sender, EventArgs e)
         {
             int id = taxiCompany.taxis.Keys.Count == 0 ? 0 : taxiCompany.taxis.Keys.Max() + 1;
             taxiCompany.addTaxi(id, new Taxi(id));
             int index = taxiDropdown.Items.Add(id);
-            comboBox1.Items.Add(id);
+            tableTaxiBox.Items.Add(id);
             taxiDropdown.SelectedIndex = index;
             updateTable(0);
         }
 
+        //When a Taxi is deleted, remove it from both dropdowns and the TaxiCompany.
         private void deleteTaxiButton_Click(object sender, EventArgs e)
         {
             int taxiID = (int)taxiDropdown.SelectedItem;
             int selectedIndex = taxiDropdown.SelectedIndex;
             taxiCompany.removeTaxi(taxiID);
+            //Update both the dropdowns.
             taxiDropdown.SelectedIndex = selectedIndex - 1;
-            comboBox1.SelectedIndex = selectedIndex - 1;
+            tableTaxiBox.SelectedIndex = selectedIndex - 1;
             taxiDropdown.Items.Remove(taxiID);
-            comboBox1.Items.Remove(taxiID);
+            tableTaxiBox.Items.Remove(taxiID);
    
         }
-
+        //When a Ride is added to a Taxi.
         private void rideAddButton_Click(object sender, EventArgs e)
         {
+            //First validate the input.
             DateTime startTime = startTimePicker.Value;
             DateTime endTime = endTimePicker.Value;
 
             int timeDiff = DateTime.Compare(endTime, startTime);
             if(timeDiff < 0)
             {
-                //TODO: Popup.
+                new Popup("The start time cannot be before the end time.", this);
                 return;
             }
 
@@ -189,7 +198,7 @@ namespace CSharp_Eindopdracht2
             double distance = -1;
             if(!double.TryParse(distanceBox.Text, out distance))
             {
-                //TODO: Popup.
+                new Popup("The distance should be a number.", this);
                 return;
             }
             int taxiID = (int)taxiDropdown.SelectedItem;
@@ -197,21 +206,26 @@ namespace CSharp_Eindopdracht2
             TaxiRide taxiRide = new TaxiRide(distance, startTime, endTime, day, 0);
             taxiCompany.taxis[taxiID].addRide(taxiRide);
 
-            rideCountLabelValue.Text = taxiCompany.taxis[taxiID].rides.Count().ToString();
-            totalIncomeLabel.Text = "€" + Math.Round(taxiCompany.taxis[taxiID].getTotalIncome(), 2).ToString();
-            averageDistanceLabel.Text = taxiCompany.taxis[taxiID].getAverageDistance().ToString() + "km";
-            //Reset inputs.
-            startTimePicker.Value = new DateTime(2022, 01, 01, 12, 00, 00);
-            endTimePicker.Value = new DateTime(2022, 01, 01, 12, 00, 00);
-            distanceBox.Text = "";
-            dayBox.SelectedIndex = 0;
+            updateTaxiLabels(taxiCompany.taxis[taxiID]);
+            //Reset the inputs if the Ride was added correctly.
+            resetInputs();
 
-            if(taxiDropdown.SelectedIndex == comboBox1.SelectedIndex)
+            //If a Ride was added to the Taxi that is currently selected in the Ride Overview,
+            //refresh the table.
+            if(taxiDropdown.SelectedIndex == tableTaxiBox.SelectedIndex)
             {
                 clearTable();
                 updateTable(taxiID);
             }
+        }
 
+        //Resets Ride form inputs.
+        private void resetInputs()
+        {
+            startTimePicker.Value = new DateTime(2022, 01, 01, 12, 00, 00);
+            endTimePicker.Value = new DateTime(2022, 01, 01, 12, 00, 00);
+            distanceBox.Text = "";
+            dayBox.SelectedIndex = 0;
         }
 
         //Clears the table.
@@ -226,6 +240,7 @@ namespace CSharp_Eindopdracht2
             }
         }
 
+        //Rebuilds the Ride Overview table with the currently selected Taxi data.
         private void updateTable(int taxiID)
         {
             int rowCount = 1;
@@ -233,47 +248,34 @@ namespace CSharp_Eindopdracht2
             {
                 String startTime = ride.startTime.ToString("HH:mm");
                 String endTime = ride.endTime.ToString("HH:mm");
-                String day = getDayName(ride.day);
-                double dueMoney = -1; ;
+                String day = ride.getDayName();
+                double dueMoney = ride.getDueMoney();
 
+                //Create cells and put data in them.
                 tableLayoutPanel1.Controls.Add(new Label() { Text = ride.rideID.ToString(), Anchor = AnchorStyles.None }, 0, rowCount);
                 tableLayoutPanel1.Controls.Add(new Label() { Text = startTime }, 1, rowCount);
                 tableLayoutPanel1.Controls.Add(new Label() { Text = endTime }, 2, rowCount);
                 tableLayoutPanel1.Controls.Add(new Label() { Text = ride.distance.ToString() + "km" }, 3, rowCount);
                 tableLayoutPanel1.Controls.Add(new Label() { Text = day }, 4, rowCount);
-                tableLayoutPanel1.Controls.Add(new Label() { Text = dueMoney.ToString() }, 5, rowCount);
+                tableLayoutPanel1.Controls.Add(new Label() { Text = "€" +  dueMoney.ToString("0.00") }, 5, rowCount);
                 rowCount++;
             }
         }
-
-        private String getDayName(int day)
-        {
-            switch(day)
-            {
-                case 0: return "Monday";
-                case 1: return "Tuesday";
-                case 2: return "Wednesday";
-                case 3: return "Thursday";
-                case 4: return "Friday";
-                case 5: return "Saturday";
-                case 6: return "Sunday";
-                default: return "Invalid";
-            }
-        }
-
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        //A Taxi is selected in the Ride Overview dropdown.
+        private void tableTaxiBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             clearTable();
-            if(comboBox1.SelectedIndex == -1)
+            if(tableTaxiBox.SelectedIndex == -1)
             {
                 return;
             }
-            updateTable((int)comboBox1.SelectedItem);
+            updateTable((int)tableTaxiBox.SelectedItem);
         }
 
+        //A Taxi is selected in the Manage Taxis dropdown.
         private void taxiDropdown_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Console.WriteLine(taxiDropdown.SelectedIndex);
+            //If the dropdown is empty, disable the form inputs.
             if(taxiDropdown.SelectedIndex == -1)
             {
                 startTimePicker.Enabled = false;
@@ -282,26 +284,35 @@ namespace CSharp_Eindopdracht2
                 dayBox.Enabled = false;
                 deleteTaxiButton.Enabled = false;
                 rideAddButton.Enabled = false;
-                return;
             }
-            Taxi taxi = taxiCompany.taxis[(int)taxiDropdown.SelectedItem];
+            else
+            {
+                //Update all labels with the data of the newly selected Taxi.;
+                updateTaxiLabels(taxiCompany.taxis[(int)taxiDropdown.SelectedItem]);
+
+                //Enable all form inputs in case they where disabled if the previous input was the empty selection.
+                startTimePicker.Enabled = true;
+                endTimePicker.Enabled = true;
+                distanceBox.Enabled = true;
+                dayBox.Enabled = true;
+                deleteTaxiButton.Enabled = true;
+                rideAddButton.Enabled = true;
+            }
+        }
+
+        //Updates the Taxi labels with new current Taxi information.
+        private void updateTaxiLabels(Taxi taxi)
+        {
             taxiIDLabel.Text = taxi.taxiID.ToString();
             rideCountLabelValue.Text = taxi.rides.Count().ToString();
             totalIncomeLabel.Text = "€" + Math.Round(taxi.getTotalIncome(), 2).ToString();
             averageDistanceLabel.Text = taxi.getAverageDistance().ToString() + "km";
-
-
-            startTimePicker.Enabled = true;
-            endTimePicker.Enabled = true;
-            distanceBox.Enabled = true;
-            dayBox.Enabled = true;
-            deleteTaxiButton.Enabled = true;
-            rideAddButton.Enabled = true;
+            longestRideLabel.Text = taxi.getLongestRideDistance().ToString() + "km";
         }
 
+        //Fixes tray icon staying in the tray after exiting application.
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
         {
-            //Fix tray icon staying in the tray after exiting application.
             trayIcon.Visible = false;
             trayIcon.Dispose();
         }

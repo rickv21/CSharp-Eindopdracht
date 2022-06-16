@@ -33,20 +33,7 @@ namespace CSharp_Eindopdracht2
             double totalIncome = 0;
             foreach (TaxiRide ride in rides)
             {
-                double wholeNumber = Math.Truncate(ride.distance);
-                double income = (wholeNumber * 0.50);
-                TimeSpan ts = ride.endTime - ride.startTime;
-                Console.WriteLine("Minutes: " + ts.TotalMinutes);
-                income += (ts.Minutes * 0.17);
-
-                if((ride.day == 4 && ride.startTime.Hour >= 22) ||
-                    ride.day >= 5 ||
-                    (ride.day == 0 && ride.startTime.Hour <= 7))
-                {
-                    Console.WriteLine("Match - " + ride.day + " - " + ride.startTime.Hour);
-                    income += (income / 100 * 15);
-                }
-                totalIncome += income;
+                totalIncome += ride.getDueMoney();
             }
             return totalIncome;
         }

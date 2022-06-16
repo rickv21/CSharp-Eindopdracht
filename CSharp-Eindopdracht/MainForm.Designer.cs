@@ -32,6 +32,8 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.tabControl = new System.Windows.Forms.TabControl();
             this.taxiTab = new System.Windows.Forms.TabPage();
+            this.rideCountLabelValue = new System.Windows.Forms.Label();
+            this.rideCountLabel = new System.Windows.Forms.Label();
             this.averageDistanceLabel = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.totalIncomeLabel = new System.Windows.Forms.Label();
@@ -65,7 +67,7 @@
             this.tableDistanceLabel = new System.Windows.Forms.Label();
             this.tableDueMoneyLabel = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.tableTaxiBox = new System.Windows.Forms.ComboBox();
             this.companyTab = new System.Windows.Forms.TabPage();
             this.companySaveButton = new System.Windows.Forms.Button();
             this.companyBox = new System.Windows.Forms.TextBox();
@@ -79,8 +81,6 @@
             this.trayContextAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.trayContextOpen = new System.Windows.Forms.ToolStripMenuItem();
             this.trayContextExit = new System.Windows.Forms.ToolStripMenuItem();
-            this.rideCountLabelValue = new System.Windows.Forms.Label();
-            this.rideCountLabel = new System.Windows.Forms.Label();
             this.tabControl.SuspendLayout();
             this.taxiTab.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -126,19 +126,39 @@
             this.taxiTab.Text = "Manage Taxis";
             this.taxiTab.UseVisualStyleBackColor = true;
             // 
+            // rideCountLabelValue
+            // 
+            this.rideCountLabelValue.AutoSize = true;
+            this.rideCountLabelValue.Location = new System.Drawing.Point(340, 152);
+            this.rideCountLabelValue.Name = "rideCountLabelValue";
+            this.rideCountLabelValue.Size = new System.Drawing.Size(16, 13);
+            this.rideCountLabelValue.TabIndex = 14;
+            this.rideCountLabelValue.Text = "-1";
+            this.rideCountLabelValue.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // rideCountLabel
+            // 
+            this.rideCountLabel.AutoSize = true;
+            this.rideCountLabel.Location = new System.Drawing.Point(220, 152);
+            this.rideCountLabel.Name = "rideCountLabel";
+            this.rideCountLabel.Size = new System.Drawing.Size(63, 13);
+            this.rideCountLabel.TabIndex = 13;
+            this.rideCountLabel.Text = "Ride Count:";
+            // 
             // averageDistanceLabel
             // 
             this.averageDistanceLabel.AutoSize = true;
-            this.averageDistanceLabel.Location = new System.Drawing.Point(368, 134);
+            this.averageDistanceLabel.Location = new System.Drawing.Point(340, 134);
             this.averageDistanceLabel.Name = "averageDistanceLabel";
             this.averageDistanceLabel.Size = new System.Drawing.Size(16, 13);
             this.averageDistanceLabel.TabIndex = 12;
             this.averageDistanceLabel.Text = "-1";
+            this.averageDistanceLabel.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(261, 134);
+            this.label14.Location = new System.Drawing.Point(220, 134);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(113, 13);
             this.label14.TabIndex = 11;
@@ -147,16 +167,17 @@
             // totalIncomeLabel
             // 
             this.totalIncomeLabel.AutoSize = true;
-            this.totalIncomeLabel.Location = new System.Drawing.Point(368, 118);
+            this.totalIncomeLabel.Location = new System.Drawing.Point(340, 118);
             this.totalIncomeLabel.Name = "totalIncomeLabel";
             this.totalIncomeLabel.Size = new System.Drawing.Size(16, 13);
             this.totalIncomeLabel.TabIndex = 10;
             this.totalIncomeLabel.Text = "-1";
+            this.totalIncomeLabel.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(261, 118);
+            this.label12.Location = new System.Drawing.Point(220, 118);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(71, 13);
             this.label12.TabIndex = 9;
@@ -165,16 +186,17 @@
             // longestRideLabel
             // 
             this.longestRideLabel.AutoSize = true;
-            this.longestRideLabel.Location = new System.Drawing.Point(368, 102);
+            this.longestRideLabel.Location = new System.Drawing.Point(340, 102);
             this.longestRideLabel.Name = "longestRideLabel";
             this.longestRideLabel.Size = new System.Drawing.Size(16, 13);
             this.longestRideLabel.TabIndex = 8;
             this.longestRideLabel.Text = "-1";
+            this.longestRideLabel.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(261, 102);
+            this.label10.Location = new System.Drawing.Point(220, 102);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(114, 13);
             this.label10.TabIndex = 7;
@@ -183,16 +205,17 @@
             // taxiIDLabel
             // 
             this.taxiIDLabel.AutoSize = true;
-            this.taxiIDLabel.Location = new System.Drawing.Point(368, 85);
+            this.taxiIDLabel.Location = new System.Drawing.Point(340, 85);
             this.taxiIDLabel.Name = "taxiIDLabel";
             this.taxiIDLabel.Size = new System.Drawing.Size(16, 13);
             this.taxiIDLabel.TabIndex = 6;
             this.taxiIDLabel.Text = "-1";
+            this.taxiIDLabel.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(261, 85);
+            this.label8.Location = new System.Drawing.Point(220, 85);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(47, 13);
             this.label8.TabIndex = 5;
@@ -369,7 +392,7 @@
             // 
             this.rideTab.Controls.Add(this.tableLayoutPanel1);
             this.rideTab.Controls.Add(this.label9);
-            this.rideTab.Controls.Add(this.comboBox1);
+            this.rideTab.Controls.Add(this.tableTaxiBox);
             this.rideTab.Location = new System.Drawing.Point(4, 22);
             this.rideTab.Name = "rideTab";
             this.rideTab.Padding = new System.Windows.Forms.Padding(3);
@@ -417,7 +440,7 @@
             // 
             this.tableRideIDLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.tableRideIDLabel.AutoSize = true;
-            this.tableRideIDLabel.Location = new System.Drawing.Point(8, 19);
+            this.tableRideIDLabel.Location = new System.Drawing.Point(9, 19);
             this.tableRideIDLabel.Name = "tableRideIDLabel";
             this.tableRideIDLabel.Size = new System.Drawing.Size(43, 13);
             this.tableRideIDLabel.TabIndex = 0;
@@ -427,7 +450,7 @@
             // 
             this.tableStartLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.tableStartLabel.AutoSize = true;
-            this.tableStartLabel.Location = new System.Drawing.Point(64, 19);
+            this.tableStartLabel.Location = new System.Drawing.Point(66, 19);
             this.tableStartLabel.Name = "tableStartLabel";
             this.tableStartLabel.Size = new System.Drawing.Size(55, 13);
             this.tableStartLabel.TabIndex = 1;
@@ -437,7 +460,7 @@
             // 
             this.tableEndLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.tableEndLabel.AutoSize = true;
-            this.tableEndLabel.Location = new System.Drawing.Point(131, 19);
+            this.tableEndLabel.Location = new System.Drawing.Point(133, 19);
             this.tableEndLabel.Name = "tableEndLabel";
             this.tableEndLabel.Size = new System.Drawing.Size(52, 13);
             this.tableEndLabel.TabIndex = 2;
@@ -447,7 +470,7 @@
             // 
             this.tableDayLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.tableDayLabel.AutoSize = true;
-            this.tableDayLabel.Location = new System.Drawing.Point(277, 19);
+            this.tableDayLabel.Location = new System.Drawing.Point(282, 19);
             this.tableDayLabel.Name = "tableDayLabel";
             this.tableDayLabel.Size = new System.Drawing.Size(26, 13);
             this.tableDayLabel.TabIndex = 4;
@@ -457,7 +480,7 @@
             // 
             this.tableDistanceLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.tableDistanceLabel.AutoSize = true;
-            this.tableDistanceLabel.Location = new System.Drawing.Point(197, 19);
+            this.tableDistanceLabel.Location = new System.Drawing.Point(201, 19);
             this.tableDistanceLabel.Name = "tableDistanceLabel";
             this.tableDistanceLabel.Size = new System.Drawing.Size(49, 13);
             this.tableDistanceLabel.TabIndex = 3;
@@ -467,7 +490,7 @@
             // 
             this.tableDueMoneyLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.tableDueMoneyLabel.AutoSize = true;
-            this.tableDueMoneyLabel.Location = new System.Drawing.Point(335, 19);
+            this.tableDueMoneyLabel.Location = new System.Drawing.Point(342, 19);
             this.tableDueMoneyLabel.Name = "tableDueMoneyLabel";
             this.tableDueMoneyLabel.Size = new System.Drawing.Size(62, 13);
             this.tableDueMoneyLabel.TabIndex = 5;
@@ -482,14 +505,14 @@
             this.label9.TabIndex = 6;
             this.label9.Text = "Taxi:";
             // 
-            // comboBox1
+            // tableTaxiBox
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(72, 22);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(121, 21);
-            this.comboBox1.TabIndex = 5;
-            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
+            this.tableTaxiBox.FormattingEnabled = true;
+            this.tableTaxiBox.Location = new System.Drawing.Point(72, 22);
+            this.tableTaxiBox.Name = "tableTaxiBox";
+            this.tableTaxiBox.Size = new System.Drawing.Size(121, 21);
+            this.tableTaxiBox.TabIndex = 5;
+            this.tableTaxiBox.SelectedIndexChanged += new System.EventHandler(this.tableTaxiBox_SelectedIndexChanged);
             // 
             // companyTab
             // 
@@ -602,24 +625,6 @@
             this.trayContextExit.Text = "Exit";
             this.trayContextExit.Click += new System.EventHandler(this.trayExitMenuItem_Click);
             // 
-            // rideCountLabelValue
-            // 
-            this.rideCountLabelValue.AutoSize = true;
-            this.rideCountLabelValue.Location = new System.Drawing.Point(368, 152);
-            this.rideCountLabelValue.Name = "rideCountLabelValue";
-            this.rideCountLabelValue.Size = new System.Drawing.Size(16, 13);
-            this.rideCountLabelValue.TabIndex = 14;
-            this.rideCountLabelValue.Text = "-1";
-            // 
-            // rideCountLabel
-            // 
-            this.rideCountLabel.AutoSize = true;
-            this.rideCountLabel.Location = new System.Drawing.Point(261, 152);
-            this.rideCountLabel.Name = "rideCountLabel";
-            this.rideCountLabel.Size = new System.Drawing.Size(63, 13);
-            this.rideCountLabel.TabIndex = 13;
-            this.rideCountLabel.Text = "Ride Count:";
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -683,7 +688,7 @@
         private System.Windows.Forms.Label averageDistanceLabel;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox tableTaxiBox;
         private System.Windows.Forms.Label tableRideIDLabel;
         private System.Windows.Forms.TextBox companyBox;
         private System.Windows.Forms.Label companyLabel;

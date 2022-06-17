@@ -30,7 +30,9 @@ namespace CSharp_Eindopdracht2
             double dueMoney = (wholeNumber * 0.50);
             TimeSpan ts = this.endTime - this.startTime;
             Console.WriteLine("Minutes: " + ts.TotalMinutes);
-            dueMoney += (ts.Minutes * 0.17);
+            dueMoney += (ts.TotalMinutes * 0.17);
+
+            Console.WriteLine(dueMoney);
 
             if ((this.day == 4 && this.startTime.Hour >= 22) ||
                 this.day >= 5 ||

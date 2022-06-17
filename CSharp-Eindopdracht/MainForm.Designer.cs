@@ -299,6 +299,7 @@
             // 
             this.distanceBox.Enabled = false;
             this.distanceBox.Location = new System.Drawing.Point(64, 98);
+            this.distanceBox.MaxLength = 5;
             this.distanceBox.Name = "distanceBox";
             this.distanceBox.Size = new System.Drawing.Size(34, 20);
             this.distanceBox.TabIndex = 4;

@@ -56,90 +56,24 @@ In the table below all the input (that the user has to input in order to make th
 
 ## Class Diagram
 
-![Class Diagram](diagram.png "Class diagram")
+![Class Diagram](diagramv2.png "Class diagram")
 
 
 ## GUI drawing
 
-![Tab1](Tab1.png "Tab1")
-![Tab2](Tab2.png "Tab2")
-![Tab3](Tab3.png "Tab3")
+![Tab1](menu1.png "Tab1")
+![Tab2](menu2.png "Tab2")
+![Tab3](menu3.png "Tab3")
 
 ## Testplan
 
-### Testdata
-
-#### TaxiRide
-
-| Type       | Data    |
-|------------|---------|
-| Start time | `10:15`  |
-| End time   | `11:20`  |
-| Distance   | `11`     |
-| Day        | `Tuesday` |
-
-#### TaxiCompany
-
-| Type       | Data    |
-|------------|---------|
-| CompanyName | `NHL Stenden` |
+| Input          |              |            |              | Output        |                  |                      |                      |            |
+|----------------|--------------|------------|--------------|---------------|------------------|----------------------|----------------------|------------|
+| **Start time** | **End time** | **Day**    | **Distance** | **Due money** | **Total Income** | **Average distance** | **Longest Distance** | Ride Count | 
+| `13:00`        | `17:00`      | `Monday`   | `10`         | `45,80`       | `48,80`          | `10`                 | `10`                 | 1          |
+| `16:00`        | `17:00`      | `Tuesday`  | `25`         | `22,70`       | `68,50`          | `17,5`               | `25`                 | 2          |
+| `05:00`        | `08:00`      | `Monday`   | `5`          | `38,06`       | `106,56`         | `13,33`              | `25`                 | 3          |
+| `23:00`        | `02:00`      | `Friday`   | `10`         | `40,94`       | `147,50`         | `12,5`               | `25`                 | 4          |
+| `12:30`        | `14:00`      | `Saturday` | `30,5`       | `39,73`       | `187,23`         | `16,10`              | `30,5`               | 5          |
 
 
-In this section the testcases will be described to test the application.
-At the start of this testplan there should be no existing data in the database.
-
-#### #1 Test Taxi creation.
-
-Testing if the creation of Taxis and the input validation of the form is working correctly.
-
-| Step | Input                                                                                   | Action                                                                                  | Expected output                                                                                     |
-|------|-----------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------|
-| 1    |                                                                                         | Click on add new Taxi.                                                                  | A Taxi is added to the dropdown and the ID, distance and income information is listed on the right. |
-
-#### #2 Test Ride form validation.
-
-Testing if a ride can be added to a Taxi.
-
-| Step | Input                                                                          | Action                                                                    | Expected output                                                                                      |
-|------|--------------------------------------------------------------------------------|---------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------|
-| 1    |                                                                                | Click on Add Ride without any data entered in the form.                   | Popup saying that the input is required..                                                            |
-| 2    | The TaxiRide test data but with a End time before the Start time.              | Enter a End time that is before the Start time.                           | Popup saying that the end time cannot be before the start time.                                      |
-| 3    | The TaxiRide test data but with a letter instead of a number for the Distance. | Enter a letter instead of a number in the Distance field.                 | Popup saying that the distance should be a number.                                                   |
-
-#### #3 Test adding TaxiRides.
-
-Testing if a ride can be added to a Taxi.
-
-| Step | Input                                                                          | Action                                                                       | Expected output                                                                                     |
-|------|--------------------------------------------------------------------------------|------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------|
-| 1    |                                                                                | Check the current state of the Ride Overview tab.                            | The Ride Overview tab with no Taxi selected.                                                        |
-| 2    | The ID of the added Taxi.                                                      | Select the Taxi from the dropdown.                                           | A empty table.                                                                                      |
-| 3    |                                                                                | Go back to the Manage Taxi tab.                                              | The Manage Taxi menu.                                                                               |
-| 4    | The ID of the added Taxi.                                                      | Select the previously created Taxi.                                          |                                                                                                     |
-| 5    | The TaxiRide test data.                                                        | Fill in the correct test data for the Ride and press the Add Ride button.    | The input fields should become empty again and the Taxi information on the right should be updated. |
-| 6    | The ID of the added Taxi.                                                      | Go back to the Manage Taxi tab and select the previously created Taxi again. | The Ride you just added in the table.                                                               |
-
-
-#### #4 Test database saving and loading.
-
-Test if the data is saved to the database and loaded correctly on startup.
-
-| Step | Input                      | Action                                                                | Expected output                                           |
-|------|----------------------------|-----------------------------------------------------------------------|-----------------------------------------------------------|
-| 1    |                            | Go to the Company Information tab.                                    | The Company Information menu.                             |
-| 2    | The TaxiCompany test data. | Change the company name to the value in the test data and press save. | A popup saying that the company name was saved correctly. |
-| 3    |                            | Restart the application.                                              | The Manage Taxis tab.                                     |
-| 4    | The ID of the added Taxi.  | Go to the Ride Overview and select the previously created Taxi.       | The previously added Ride is still listed in the table.   |
-| 5    |                            | Go to the Company Information tab.                                    | The name of the company is still the changed value.       |
-
-
-#### #5 Delete Taxi.
-
-Test if deleting Taxis works correctly.
-
-| Step | Input                     | Action                                         | Expected output                                                                                 |
-|------|---------------------------|------------------------------------------------|-------------------------------------------------------------------------------------------------|
-| 1    |                           | Go to the Manage Taxi tab.                     | The Manage Taxi menu.                                                                           |
-| 2    | The ID of the added Taxi. | Select the existing Taxi.                      | The data on the right is filled with the data of the Taxi.                                      |
-| 3    |                           | Click on the Delete Taxi button.               | The Taxi disappears from the dropdown and the data on the right return to their default values. |
-| 4    |                           | Go to the Ride Overview click on the dropdown. | The Taxi should not be in the dropdown anymore.                                                 |

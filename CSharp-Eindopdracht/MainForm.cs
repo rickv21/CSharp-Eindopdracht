@@ -1,12 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace CSharp_Eindopdracht2
@@ -15,19 +10,19 @@ namespace CSharp_Eindopdracht2
     {
         private TaxiCompany taxiCompany;
         private SplashScreen splashScreen;
-        private bool loading = true;
         private About aboutForm = null;
         private DatabaseHandler databaseHandler;
-
+        private int rowCount = 1;
 
         public MainForm()
         {
             Thread t = new Thread(new ThreadStart(StartForm));
             t.Start();
-            Thread.Sleep(2000);
+
             databaseHandler = new DatabaseHandler(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=TaxiApp;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False;MultipleActiveResultSets=true");
 
             taxiCompany = new TaxiCompany();
+            taxiCompany.companyName = databaseHandler.getCompanyName();
 
             List<Taxi> taxiList = databaseHandler.getData();
             foreach (Taxi taxi in taxiList)
@@ -35,6 +30,9 @@ namespace CSharp_Eindopdracht2
                 taxiCompany.addTaxi(taxi.taxiID, taxi);
             }
             InitializeComponent();
+
+            Thread.Sleep(1000);
+
             t.Abort();
         }
 
@@ -91,11 +89,11 @@ namespace CSharp_Eindopdracht2
         private void trayAboutMenuItem_Click(object sender, EventArgs e)
         {
             //If there is already a About window open, use this instead of opening a new instance.
-            if(aboutForm != null)
+            if (aboutForm != null)
             {
                 this.aboutForm.WindowState = FormWindowState.Normal;
                 this.aboutForm.Activate();
-            } 
+            }
             else
             {
                 this.aboutForm = new About();
@@ -166,6 +164,7 @@ namespace CSharp_Eindopdracht2
         private void companySaveButton_Click(object sender, EventArgs e)
         {
             this.taxiCompany.companyName = companyBox.Text;
+            databaseHandler.setCompany(companyBox.Text);
         }
 
         //When a Taxi is added, add it to the dropdowns and the Taxi company.
@@ -192,7 +191,8 @@ namespace CSharp_Eindopdracht2
             tableTaxiBox.SelectedIndex = selectedIndex - 1;
             taxiDropdown.Items.Remove(taxiID);
             tableTaxiBox.Items.Remove(taxiID);
-   
+            updateTaxiLabels(new Taxi(-1));
+
         }
         //When a Ride is added to a Taxi.
         private void rideAddButton_Click(object sender, EventArgs e)
@@ -202,31 +202,43 @@ namespace CSharp_Eindopdracht2
             DateTime endTime = endTimePicker.Value;
 
             int timeDiff = DateTime.Compare(endTime, startTime);
-            if(timeDiff < 0)
+            Console.WriteLine(timeDiff);
+            if (timeDiff < 0)
             {
-                new Popup("The start time cannot be before the end time.", this);
-                return;
+                //If the end time is after the begin time.
+                //Set the end time to the next day.
+                endTime = endTime.AddDays(1);
             }
 
             int day = dayBox.SelectedIndex;
             double distance = -1;
-            if(!double.TryParse(distanceBox.Text, out distance))
+            if (!double.TryParse(distanceBox.Text, out distance))
             {
                 new Popup("The distance should be a number.", this);
                 return;
             }
             int taxiID = (int)taxiDropdown.SelectedItem;
-            //TODO: Get ID from AI DB.
+            //Create TaxiRide object, set ID to 0 because it is not generated yet.
             TaxiRide taxiRide = new TaxiRide(distance, startTime, endTime, day, 0);
-            taxiCompany.taxis[taxiID].addRide(taxiRide);
+            int rideID = databaseHandler.addRide(taxiID, taxiRide);
 
+            //Something went wrong.
+            if (rideID == -1)
+            {
+                new Popup("Something went wrong during Ride creation in database.", this);
+                return;
+            }
+
+            //Set the generated ride_id.
+            taxiRide.rideID = rideID;
+            taxiCompany.taxis[taxiID].addRide(taxiRide);
             updateTaxiLabels(taxiCompany.taxis[taxiID]);
             //Reset the inputs if the Ride was added correctly.
             resetInputs();
 
             //If a Ride was added to the Taxi that is currently selected in the Ride Overview,
             //refresh the table.
-            if(taxiDropdown.SelectedIndex == tableTaxiBox.SelectedIndex)
+            if (taxiDropdown.SelectedIndex == tableTaxiBox.SelectedIndex)
             {
                 clearTable();
                 updateTable(taxiID);
@@ -245,20 +257,23 @@ namespace CSharp_Eindopdracht2
         //Clears the table.
         private void clearTable()
         {
-            for (int row = 1; row <= tableLayoutPanel1.RowCount - 1; row++)
+            Console.WriteLine(tableLayoutPanel1.Height);
+            Console.WriteLine(tableLayoutPanel1.RowCount);  
+            for (int row = 1; row <= rowCount - 1; row++)
             {
                 for (int col = 0; col <= tableLayoutPanel1.ColumnCount; col++)
                 {
                     tableLayoutPanel1.Controls.Remove(tableLayoutPanel1.GetControlFromPosition(col, row));
                 }
             }
+            tableLayoutPanel1.RowCount = 10;
+            rowCount = 1;
         }
 
         //Rebuilds the Ride Overview table with the currently selected Taxi data.
         private void updateTable(int taxiID)
-        {
-            int rowCount = 1;
-            foreach(TaxiRide ride in taxiCompany.taxis[taxiID].rides)
+        {           
+            foreach (TaxiRide ride in taxiCompany.taxis[taxiID].rides)
             {
                 String startTime = ride.startTime.ToString("HH:mm");
                 String endTime = ride.endTime.ToString("HH:mm");
@@ -271,19 +286,27 @@ namespace CSharp_Eindopdracht2
                 tableLayoutPanel1.Controls.Add(new Label() { Text = endTime }, 2, rowCount);
                 tableLayoutPanel1.Controls.Add(new Label() { Text = ride.distance.ToString() + "km" }, 3, rowCount);
                 tableLayoutPanel1.Controls.Add(new Label() { Text = day }, 4, rowCount);
-                tableLayoutPanel1.Controls.Add(new Label() { Text = "€" +  dueMoney.ToString("0.00") }, 5, rowCount);
+                tableLayoutPanel1.Controls.Add(new Label() { Text = "€" + dueMoney.ToString("0.00") }, 5, rowCount);
                 rowCount++;
             }
         }
+
+       
+
         //A Taxi is selected in the Ride Overview dropdown.
         private void tableTaxiBox_SelectedIndexChanged(object sender, EventArgs e)
         {
+            tableLayoutPanel1.Visible = false;
             clearTable();
-            if(tableTaxiBox.SelectedIndex == -1)
+        
+            if (tableTaxiBox.SelectedIndex == -1)
             {
+                tableLayoutPanel1.Visible = true;
                 return;
             }
-            updateTable((int)tableTaxiBox.SelectedItem);
+         
+            updateTable((int) tableTaxiBox.SelectedItem);
+            tableLayoutPanel1.Visible = true;
         }
 
         //A Taxi is selected in the Manage Taxis dropdown.
@@ -319,8 +342,8 @@ namespace CSharp_Eindopdracht2
         {
             taxiIDLabel.Text = taxi.taxiID.ToString();
             rideCountLabelValue.Text = taxi.rides.Count().ToString();
-            totalIncomeLabel.Text = "€" + Math.Round(taxi.getTotalIncome(), 2).ToString();
-            averageDistanceLabel.Text = taxi.getAverageDistance().ToString() + "km";
+            totalIncomeLabel.Text = "€" + Math.Round(taxi.getTotalIncome(), 2).ToString("N2");
+            averageDistanceLabel.Text = taxi.getAverageDistance().ToString("N2") + "km";
             longestRideLabel.Text = taxi.getLongestRideDistance().ToString() + "km";
         }
 
